@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   def index
     @organization = current_organization
+    @displayable_synchronized_entities = @organization.displayable_synchronized_entities if @organization
   end
 
   def update
@@ -13,6 +14,17 @@ class HomeController < ApplicationController
         organization.synchronized_entities[entity] = !!params["#{entity}"]
       end
       organization.sync_enabled = organization.synchronized_entities.values.any?
+
+      unless organization.historical_data
+        historical_data = !!params['historical-data']
+        if historical_data
+          organization.date_filtering_limit = nil
+          organization.historical_data = true
+        else
+          organization.date_filtering_limit ||= Time.now
+        end
+      end
+      
       organization.save
 
       if !old_sync_state
@@ -26,7 +38,7 @@ class HomeController < ApplicationController
 
   def synchronize
     if is_admin
-      Maestrano::Connector::Rails::SynchronizationJob.perform_later(current_organization, params['opts'] || {})
+      Maestrano::Connector::Rails::SynchronizationJob.perform_later(current_organization, (params['opts'] || {}).merge(forced: true))
       flash[:info] = 'Synchronization requested'
     end
 
