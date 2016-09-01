@@ -10,6 +10,8 @@ require 'shoulda/matchers'
 
 Rails.backtrace_cleaner.remove_silencers!
 
+Maestrano.reset!
+
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 

@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-# ruby '2.2.3', :engine => 'jruby', :engine_version => '9.0.5.0'
+ruby '2.3.1', engine: 'jruby', engine_version: '9.1.3.0'
 
 gem 'rails', '~> 4.2'
 gem 'turbolinks', '~> 2.5'
@@ -9,7 +9,7 @@ gem 'figaro'
 gem 'uglifier', '>= 1.3.0'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'maestrano-connector-rails', '2.0.0.pre.RC1'
+gem 'maestrano-connector-rails', '2.0.0.pre.RC3'
 
 gem 'config'
 gem 'attr_encrypted', '~> 1.4.0'
@@ -32,13 +32,13 @@ gem 'redis-rails'
 
 group :production, :uat do
   gem 'rails_12factor'
-  gem 'activerecord-jdbcpostgresql-adapter', :platforms => :jruby
-  gem 'pg', :platforms => :ruby
+  gem 'activerecord-jdbcpostgresql-adapter', platforms: :jruby
+  gem 'pg', platforms: :ruby
 end
 
 group :test, :develpment do
-  gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
-  gem 'sqlite3', :platforms => :ruby
+  gem 'activerecord-jdbcsqlite3-adapter', platforms: :jruby
+  gem 'sqlite3', platforms: :ruby
 end
 
 group :test do
